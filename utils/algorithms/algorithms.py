@@ -71,11 +71,12 @@ class RadixSort(SortingAlgorithm):
         return output
 
     def sort(self, array: List[int], array_size: int, max_value: int, base: int = 10, reverse: bool = False):
-        if self.verifWithinLimits(array_size, max_value) and CountingSort.verifWithinLimits(array_size, base - 1):
+        aux = CountingSort(max_val=self.max_val, max_size=self.max_size) #Not really good
+        if self.verifWithinLimits(array_size, max_value) and aux.verifWithinLimits(array_size, base - 1):
             exp = 1
             # Sorting by each digit with counting sort
             while max_value // exp:
-                array = self.__countingSort(self, array, array_size, base, exp)
+                array = self.__countingSort(array, array_size, base, exp)
 
                 exp *= base
 
@@ -84,10 +85,10 @@ class RadixSort(SortingAlgorithm):
 
             return array
         else:
-            return None
+            return []
 
 
-class shellSort(SortingAlgorithm):
+class ShellSort(SortingAlgorithm):
     def sort(self, array: List[int], array_size: int, max_value: int, reverse: bool = False):
         if self.verifWithinLimits(array_size, max_value):
             gap = array_size // 2
@@ -108,6 +109,8 @@ class shellSort(SortingAlgorithm):
                 return array[::-1]
 
             return array
+        else:
+            return []
 
 
 class QuickSort(SortingAlgorithm):
