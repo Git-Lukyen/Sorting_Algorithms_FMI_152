@@ -143,7 +143,10 @@ class QuickSort(SortingAlgorithm):
         return pivot_idx
 
     def sort(self, array: List[int], array_size: int, max_value: int, reverse: bool = False):
-        self.__quicksort(array, 0, array_size - 1)
+        if self.verifWithinLimits(array_size, max_value):
+            self.__quicksort(array, 0, array_size - 1)
+        else:
+            return None
         if reverse:
             array = array[::-1]
         return array
@@ -181,7 +184,10 @@ class HeapSort(SortingAlgorithm):
             self.__heapify(array, array_size, idx)
 
     def sort(self, array: List[int], array_size: int, max_value: int, reverse: bool = False):
-        self.__heapsort(array, array_size)
+        if self.verifWithinLimits(array_size, max_value):
+            self.__heapsort(array, array_size)
+        else:
+            return None
         if reverse:
             array = array[::-1]
         return array

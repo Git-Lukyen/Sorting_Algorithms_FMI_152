@@ -2,6 +2,7 @@ from utils.algorithms import algorithms
 from utils.tests import test_generator, test_handler
 from utils.tests.test_generator import TestConfig
 from utils.algorithms.algorithms import Complexity
+import sys
 
 
 def main():
@@ -33,7 +34,7 @@ def main():
 
     # Quicksort test
     quicksort = algorithms.QuickSort(
-        "Quick sort algorithm", Complexity.N_LOG2_N, True)
+        "Quick sort algorithm", Complexity.N_LOG2_N, False, sys.maxsize, 30_000_000)
 
     target_test = tests[0]
     sorted_arr = quicksort.sort(array=target_test.array,
@@ -45,7 +46,7 @@ def main():
 
     # Heapsort test
     heapsort = algorithms.HeapSort(
-        "Heap sort algorithm", Complexity.N_LOG2_N, True)
+        "Heap sort algorithm", Complexity.N_LOG2_N, True, sys.maxsize, 30_000_000)
 
     target_test = tests[0]
     sorted_arr = heapsort.sort(array=target_test.array,
