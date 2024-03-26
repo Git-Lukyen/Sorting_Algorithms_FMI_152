@@ -43,6 +43,18 @@ def main():
     test_handler.verify_test(
         sorted_arr, target_test.length, target_test.max_value)
 
+    # Heapsort test
+    heapsort = algorithms.HeapSort(
+        "Heap sort algorithm", Complexity.N_LOG2_N, True)
+
+    target_test = tests[0]
+    sorted_arr = heapsort.sort(array=target_test.array,
+                               array_size=target_test.length,
+                               max_value=target_test.max_value)
+
+    test_handler.verify_test(
+        sorted_arr, target_test.length, target_test.max_value)
+
 
 if __name__ == "__main__":
     main()

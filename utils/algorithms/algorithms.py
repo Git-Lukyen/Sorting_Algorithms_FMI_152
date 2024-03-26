@@ -150,5 +150,38 @@ class QuickSort(SortingAlgorithm):
 
 
 class HeapSort(SortingAlgorithm):
+    def __heapsort(self, array: List[int], array_size: int):
+        self.__build_maxheap(array, array_size)
+        for idx in range(array_size - 1, 0, -1):
+            array[idx], array[0] = array[0], array[idx]
+            self.__heapify(array, idx, 0)
+
+    def __heapify(self, array: List[int], array_size: int, root: int):
+        left_node = 2 * root + 1
+        right_node = 2 * root + 2
+
+        max_node = root
+
+        # cheks if the left child larger than the root
+        if left_node < array_size and array[left_node] > array[max_node]:
+            max_node = left_node
+
+        # cheks if the right child larger than the root
+        if right_node < array_size and array[right_node] > array[max_node]:
+            max_node = right_node
+
+        if max_node != root:
+            array[max_node], array[root] = array[root], array[max_node]
+
+            # continue to heapify the rest of the tree
+            self.__heapify(array, array_size, max_node)
+
+    def __build_maxheap(self, array: List[int], array_size: int):
+        for idx in range(array_size // 2 - 1, -1, -1):
+            self.__heapify(array, array_size, idx)
+
     def sort(self, array: List[int], array_size: int, max_value: int, reverse: bool = False):
-        ...
+        self.__heapsort(array, array_size)
+        if reverse:
+            array = array[::-1]
+        return array
