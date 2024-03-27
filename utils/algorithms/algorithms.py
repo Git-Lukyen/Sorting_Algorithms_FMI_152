@@ -2,6 +2,7 @@ from abc import abstractmethod
 from typing import List
 from enum import Enum
 import random
+from time import time
 
 
 class Complexity(Enum):
@@ -10,8 +11,16 @@ class Complexity(Enum):
     N_PLUS_MAX = 3
 
 
-# Am adaugat max_val si max_size ca atribute pt clasa abstracta
-# Am adaugat metoda verifWithinLimits
+def timer(func):
+    def wrapper(*args, **kwargs):
+        start = time()
+        sorted_arr = func(*args, **kwargs)
+        end = time()
+        
+        return (sorted_arr, round(end - start, 2))
+    return wrapper
+
+
 class SortingAlgorithm:
     def __init__(self, name: str = None, complexity: str = None, in_place: bool = False, max_val: int = 0, max_size: int = 0):
         self.name = name
@@ -24,12 +33,13 @@ class SortingAlgorithm:
     def sort(self, array: List[int], array_size: int, max_value: int, reverse: bool = False):
         ...
 
+    #decorated method that tracks time passed for all sorts
+    @timer
+    def sortTimed(self, array: List[int], array_size: int, max_value: int, reverse: bool = False):
+        return self.sort(array, array_size, max_value, reverse)
+
     def verifWithinLimits(self, val: int, size: int):
-        if val > self.max_val:
-            print("Max value limit exceeded, couldn't sort")
-            return False
-        if size > self.max_size:
-            print("Array size limit exceeded, couldn't sort")
+        if val > self.max_val or size > self.max_size:
             return False
 
         return True
@@ -47,6 +57,10 @@ class CountingSort(SortingAlgorithm):
 
 # Implementez propriul counting_sort pt radix pt ca e diferit de cel normal
 class RadixSort(SortingAlgorithm):
+    def __init__(self, name: str = None, complexity: str = None, in_place: bool = False, base : int = 10, max_val: int = 0, max_size: int = 0):
+        SortingAlgorithm.__init__(self, name, complexity, in_place, max_val, max_size)
+        self.base = base
+
     def __countingSort(self, array: List[int], array_size: int, base: int, exp: int):
         output = [0] * array_size
         count = [0] * base
@@ -64,21 +78,21 @@ class RadixSort(SortingAlgorithm):
         i = array_size - 1
         while i >= 0:
             index = array[i] // exp
-            output[count[index % 10] - 1] = array[i]
-            count[index % 10] -= 1
+            output[count[index % base] - 1] = array[i]
+            count[index % base] -= 1
             i -= 1
 
         return output
 
-    def sort(self, array: List[int], array_size: int, max_value: int, base: int = 10, reverse: bool = False):
-        aux = CountingSort(max_val=self.max_val, max_size=self.max_size) #Not really good
-        if self.verifWithinLimits(array_size, max_value) and aux.verifWithinLimits(array_size, base - 1):
+    def sort(self, array: List[int], array_size: int, max_value: int, reverse: bool = False):
+        #aux = CountingSort(max_val=self.max_val, max_size=self.max_size) #Not really good
+        if self.verifWithinLimits(max_value, array_size):
             exp = 1
             # Sorting by each digit with counting sort
             while max_value // exp:
-                array = self.__countingSort(array, array_size, base, exp)
+                array = self.__countingSort(array, array_size, self.base, exp)
 
-                exp *= base
+                exp *= self.base
 
             if reverse:
                 return array[::-1]
@@ -90,7 +104,7 @@ class RadixSort(SortingAlgorithm):
 
 class ShellSort(SortingAlgorithm):
     def sort(self, array: List[int], array_size: int, max_value: int, reverse: bool = False):
-        if self.verifWithinLimits(array_size, max_value):
+        if self.verifWithinLimits(max_value, array_size):
             gap = array_size // 2
 
             while gap > 0:
