@@ -2,8 +2,8 @@ from utils.algorithms import algorithms
 from utils.tests import test_generator, test_handler
 from utils.tests.test_generator import TestConfig
 from utils.algorithms.algorithms import Complexity
-import sys
 
+#TO DO:Add bounds for python sort
 def benchmark(alg : algorithms.SortingAlgorithm, filePath : str):
     tests = test_handler.read_file(filePath)
 
@@ -58,7 +58,9 @@ def main():
         TestConfig(300_000, 1_000_000),
         TestConfig(300_000, 1_000_000_000_000),
         TestConfig(300_000, 1_000_000_000_000_000_000_000),
-        TestConfig(500_000, 1_000_000_000_000)
+        TestConfig(500_000, 1_000_000_000_000),
+        TestConfig(1_000_000, 1_000_000),
+        TestConfig(2_000_000, 1_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000)
         ])
 
     test_generator.generate_test("shell/big_arr", [
@@ -84,21 +86,21 @@ def main():
 
     # Python sort
     default_algo = algorithms.DefaultSort(
-        "Python Default Sort", Complexity.N_LOG2_N, True)
+        "Python Default Sort", Complexity.N_LOG2_N, True, 1_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000, 2_000_000)
     
-    benchmark(default_algo, test_path_ver)
+    benchmark(default_algo, test_path_radix_barr)
 
     #Quicksort test
     quicksort = algorithms.QuickSort(
-        "Quick sort algorithm", Complexity.N_LOG2_N, False, sys.maxsize, 1_000_000)
+        "Quick sort algorithm", Complexity.N_LOG2_N, False, 1_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000, 300_000)
     
-    benchmark(quicksort, test_path_ver)
+    benchmark(quicksort, test_path_radix_barr)
 
     #Heapsort test
     heapsort = algorithms.HeapSort(
-        "Heap sort algorithm", Complexity.N_LOG2_N, False, sys.maxsize, 1_000_000)
+        "Heap sort algorithm", Complexity.N_LOG2_N, False, 1_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000, 200_000)
     
-    benchmark(heapsort, test_path_ver)
+    benchmark(heapsort, test_path_radix_barr)
 
     #Base 10
     radix_algb10 = algorithms.RadixSort("Radix", Complexity.N_PLUS_MAX, False, 10, 1_000_000_000_000_000_000_000, 120_000)
