@@ -16,7 +16,7 @@ def timer(func):
         start = time()
         sorted_arr = func(*args, **kwargs)
         end = time()
-        
+
         return (sorted_arr, round(end - start, 2))
     return wrapper
 
@@ -163,7 +163,7 @@ class QuickSort(SortingAlgorithm):
         if self.verifWithinLimits(array_size, max_value):
             self.__quicksort(array, 0, array_size - 1)
         else:
-            return None
+            return []
         if reverse:
             array = array[::-1]
         return array
@@ -204,7 +204,7 @@ class HeapSort(SortingAlgorithm):
         if self.verifWithinLimits(array_size, max_value):
             self.__heapsort(array, array_size)
         else:
-            return None
+            return []
         if reverse:
             array = array[::-1]
         return array

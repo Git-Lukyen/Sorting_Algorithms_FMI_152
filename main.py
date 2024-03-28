@@ -47,13 +47,13 @@ def main():
 
     #Quicksort test
     quicksort = algorithms.QuickSort(
-        "Quick sort algorithm", Complexity.N_LOG2_N, False, sys.maxsize, 30_000_000)
+        "Quick sort algorithm", Complexity.N_LOG2_N, False, sys.maxsize, 1_000_000)
     benchmark(quicksort, test_path)
 
-   
+
     #Heapsort test
     heapsort = algorithms.HeapSort(
-        "Heap sort algorithm", Complexity.N_LOG2_N, True, sys.maxsize, 30_000_000)
+        "Heap sort algorithm", Complexity.N_LOG2_N, False, sys.maxsize, 1_000_000)
     benchmark(heapsort, test_path)
 
     #Radix test(Max value incorrectly set)
