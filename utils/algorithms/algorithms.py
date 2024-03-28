@@ -16,7 +16,7 @@ def timer(func):
         start = time()
         sorted_arr = func(*args, **kwargs)
         end = time()
-
+        
         return (sorted_arr, round(end - start, 2))
     return wrapper
 
@@ -55,7 +55,7 @@ class CountingSort(SortingAlgorithm):
         ...
 
 
-# Implementez propriul counting_sort pt radix pt ca e diferit de cel normal
+#Maxim baza 2^16
 class RadixSort(SortingAlgorithm):
     def __init__(self, name: str = None, complexity: str = None, in_place: bool = False, base : int = 10, max_val: int = 0, max_size: int = 0):
         SortingAlgorithm.__init__(self, name, complexity, in_place, max_val, max_size)
@@ -85,8 +85,7 @@ class RadixSort(SortingAlgorithm):
         return output
 
     def sort(self, array: List[int], array_size: int, max_value: int, reverse: bool = False):
-        #aux = CountingSort(max_val=self.max_val, max_size=self.max_size) #Not really good
-        if self.verifWithinLimits(max_value, array_size):
+        if self.verifWithinLimits(max_value, array_size) and self.base <= 1 << 16:
             exp = 1
             # Sorting by each digit with counting sort
             while max_value // exp:
