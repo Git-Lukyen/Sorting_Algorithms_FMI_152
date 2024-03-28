@@ -4,7 +4,6 @@ from enum import Enum
 import random
 from time import time
 
-
 class Complexity(Enum):
     N_SQUARED = 1
     N_LOG2_N = 2
@@ -47,7 +46,10 @@ class SortingAlgorithm:
 
 class DefaultSort(SortingAlgorithm):
     def sort(self, array: List[int], array_size: int, max_value: int, reverse: bool = False):
-        return sorted(array, reverse=reverse)
+        if self.verifWithinLimits(max_value, array_size):
+            return sorted(array, reverse=reverse)
+        else:
+            return []
 
 
 class CountingSort(SortingAlgorithm):
@@ -159,7 +161,7 @@ class QuickSort(SortingAlgorithm):
         return pivot_idx
 
     def sort(self, array: List[int], array_size: int, max_value: int, reverse: bool = False):
-        if self.verifWithinLimits(array_size, max_value):
+        if self.verifWithinLimits(max_value, array_size):
             self.__quicksort(array, 0, array_size - 1)
         else:
             return []
@@ -200,7 +202,7 @@ class HeapSort(SortingAlgorithm):
             self.__heapify(array, array_size, idx)
 
     def sort(self, array: List[int], array_size: int, max_value: int, reverse: bool = False):
-        if self.verifWithinLimits(array_size, max_value):
+        if self.verifWithinLimits(max_value, array_size):
             self.__heapsort(array, array_size)
         else:
             return []
