@@ -27,9 +27,9 @@ def read_file(path):
 
 
 def verify_test(array: List[int], length: int, max_value: int, reverse: bool = False):
-    assert __array_sorted__(array, reverse) is True
-    assert len(array) == length
-    assert max_value >= max(array)
+    assert __array_sorted__(array, reverse) is True, "Array is not sorted"
+    assert len(array) == length, "Length does not match"
+    assert max_value >= max(array), "Max value is exceeds array max"
 
 
 def __array_sorted__(array: List[int], reverse: bool = False):
